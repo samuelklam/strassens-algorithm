@@ -7,24 +7,33 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <string>
+#include "strassens-algorithm.hpp"
 
 using namespace std;
 
+/*
+ * Function reads in 2D matrix values into a vector of vectors
+ * @param infile : reference to the input file
+ * @param M1 : reference to Matrix 1
+ * @param M2 : reference to Matrix 2
+ * @param n : # of matrix values to read in per matrix
+ */
 void read_file(ifstream &infile, vector< vector<int> > &M1, vector< vector<int> > &M2, int n) {
     int val;
     
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            infile >> val;
-            M1[i][j] = val;
-        }
-    }
-    
-    for (int k = 0; k < n; k++) {
-        for (int l = 0; l < n; l++) {
-            infile >> val;
-            M2[k][l] = val;
+    // iterate over which matrix
+    for (int m = 0; m < 2; m++) {
+        // iterate over dimensions
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                infile >> val;
+                if (m == 0) {
+                    M1[i][j] = val;
+                }
+                else {
+                    M2[i][j] = val;
+                }
+            }
         }
     }
 }
