@@ -62,8 +62,8 @@ int main(int argc, const char * argv[]) {
     infile.close();
     
     int cross_over = 2;
-    strassen_pow2(A, B, C, 0, 0, 0, 0, cross_over, new_matrix_dim);
-//    matrix_mult_reg(A, B, C, 0, 0, 0, 0, matrix_dim);
+    strassen_pow2(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, new_matrix_dim);
+//    matrix_mult_reg(A, B, C, 0, 0, 0, 0, 0, 0, matrix_dim);
     
     matrix_print(C);
     

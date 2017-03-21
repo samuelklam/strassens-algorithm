@@ -32,7 +32,7 @@ void matrix_print(vector< vector<int> > &matrix);
  * @param c2 : starting column index for B
  * @param n : dimension of the matrices
  */
-void matrix_add(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int n);
+void matrix_add(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int n);
 
 /*
  * Standard matrix subtraction function
@@ -45,7 +45,7 @@ void matrix_add(vector< vector<int> > &A, vector< vector<int> > &B, vector< vect
  * @param c2 : starting column index for B
  * @param n : dimension of the matrices
  */
-void matrix_subtract(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int n);
+void matrix_subtract(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int n);
 
 /*
  * Standard matrix multiplication function
@@ -58,6 +58,6 @@ void matrix_subtract(vector< vector<int> > &A, vector< vector<int> > &B, vector<
  * @param c2 : starting column index for B
  * @param n : dimension of the matrices
  */
-void matrix_mult_reg(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int n);
+void matrix_mult_reg(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int n);
 
 #endif /* matrix_functions_hpp */

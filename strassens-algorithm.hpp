@@ -22,7 +22,7 @@
  * @param c2 : starting column index for B
  * @param n : dimension of the matrices
  */
-void strassen_pow2(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int cross_over, int n);
+void strassen_pow2(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int cross_over, int n);
 
 #endif /* strassens_algorithm_hpp */
 
