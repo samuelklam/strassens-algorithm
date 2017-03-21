@@ -8,6 +8,7 @@
 #include <vector>
 #include <fstream>
 #include "strassens-algorithm.hpp"
+#include <math.h>
 
 using namespace std;
 
@@ -48,17 +49,20 @@ int main(int argc, const char * argv[]) {
     int matrix_dim = atoi(argv[2]);
     ifstream infile(argv[3]);
     
-    vector<int> vector_dim(matrix_dim);
+    // raise the dimension to the next, closest power of 2
+    int new_matrix_dim = pow(2, int(ceil(log2(matrix_dim))));
+    
+    vector<int> vector_dim(new_matrix_dim);
     
     // initialize vector of vectors (matrix representation)
-    vector< vector<int> > A(matrix_dim, vector_dim), B(matrix_dim, vector_dim), C(matrix_dim, vector_dim);
+    vector< vector<int> > A(new_matrix_dim, vector_dim), B(new_matrix_dim, vector_dim), C(new_matrix_dim, vector_dim);
     
     // store values in matrix A and B
     read_file(infile, A, B, matrix_dim);
     infile.close();
     
     int cross_over = 2;
-    strassen_pow2(A, B, C, 0, 0, 0, 0, cross_over, matrix_dim);
+    strassen_pow2(A, B, C, 0, 0, 0, 0, cross_over, new_matrix_dim);
 //    matrix_mult_reg(A, B, C, 0, 0, 0, 0, matrix_dim);
     
     matrix_print(C);

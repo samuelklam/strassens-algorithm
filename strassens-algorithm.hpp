@@ -1,8 +1,7 @@
 //
 //  strassens-algorithm.hpp
 //
-//  Created by Samuel K. Lam on 3/20/17.
-//  Copyright © 2017 Samuel K. Lam. All rights reserved.
+//  File contains an implementation of Strassen's Algorithm for Faster Matrix Multiplication
 //
 
 #ifndef strassens_algorithm_hpp
@@ -12,6 +11,17 @@
 #include <vector>
 #include "matrix-functions.hpp"
 
+/*
+ * Strassen's matrix multiplication algorithm
+ * @param A : reference to matrix 1
+ * @param B : reference to matrix 2
+ * @param C : C = A * B (matrix product)
+ * @param r1 : starting row index for A
+ * @param c1 : starting column index for A
+ * @param r2 : starting row index for B
+ * @param c2 : starting column index for B
+ * @param n : dimension of the matrices
+ */
 void strassen_pow2(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int cross_over, int n);
 
 #endif /* strassens_algorithm_hpp */

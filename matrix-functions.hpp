@@ -1,8 +1,8 @@
 //
 //  matrix-functions.hpp
 //
-//  Created by Samuel K. Lam on 3/20/17.
-//  Copyright © 2017 Samuel K. Lam. All rights reserved.
+//  File contains an assortment of matrix helper functions
+//  Matrix print, add, subtract, and standard multiplication
 //
 
 #ifndef matrix_functions_hpp
@@ -25,11 +25,12 @@ void matrix_print(vector< vector<int> > &matrix);
  * Standard matrix addition function
  * @param A : reference to matrix 1
  * @param B : reference to matrix 2
- * @param C : C = A + B (matrix sum)
- * @param r1 : starting row index
- * @param c1 : starting column index
- * @param r2 : ending row index (non-inclusive)
- * @param c2 : ending column index (non-inclusive)
+ * @param C : C = A + B (matrix addition)
+ * @param r1 : starting row index for A
+ * @param c1 : starting column index for A
+ * @param r2 : starting row index for B
+ * @param c2 : starting column index for B
+ * @param n : dimension of the matrices
  */
 void matrix_add(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int n);
 
@@ -38,10 +39,11 @@ void matrix_add(vector< vector<int> > &A, vector< vector<int> > &B, vector< vect
  * @param A : reference to matrix 1
  * @param B : reference to matrix 2
  * @param C : C = A - B (matrix difference)
- * @param r1 : starting row index
- * @param c1 : starting column index
- * @param r2 : ending row index (non-inclusive)
- * @param c2 : ending column index (non-inclusive)
+ * @param r1 : starting row index for A
+ * @param c1 : starting column index for A
+ * @param r2 : starting row index for B
+ * @param c2 : starting column index for B
+ * @param n : dimension of the matrices
  */
 void matrix_subtract(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int n);
 
@@ -50,6 +52,10 @@ void matrix_subtract(vector< vector<int> > &A, vector< vector<int> > &B, vector<
  * @param A : reference to matrix 1
  * @param B : reference to matrix 2
  * @param C : C = A * B (matrix product)
+ * @param r1 : starting row index for A
+ * @param c1 : starting column index for A
+ * @param r2 : starting row index for B
+ * @param c2 : starting column index for B
  * @param n : dimension of the matrices
  */
 void matrix_mult_reg(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int n);
