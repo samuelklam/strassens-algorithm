@@ -14,11 +14,11 @@ using namespace std;
 /*
  * Function reads in 2D matrix values into a vector of vectors
  * @param infile : reference to the input file
- * @param M1 : reference to Matrix 1
- * @param M2 : reference to Matrix 2
+ * @param A : reference to Matrix 1
+ * @param B : reference to Matrix 2
  * @param n : # of matrix values to read in per matrix
  */
-void read_file(ifstream &infile, vector< vector<int> > &M1, vector< vector<int> > &M2, int n) {
+void read_file(ifstream &infile, vector< vector<int> > &A, vector< vector<int> > &B, int n) {
     int val;
     
     // iterate over which matrix
@@ -28,10 +28,10 @@ void read_file(ifstream &infile, vector< vector<int> > &M1, vector< vector<int> 
             for (int j = 0; j < n; j++) {
                 infile >> val;
                 if (m == 0) {
-                    M1[i][j] = val;
+                    A[i][j] = val;
                 }
                 else {
-                    M2[i][j] = val;
+                    B[i][j] = val;
                 }
             }
         }
@@ -48,13 +48,20 @@ int main(int argc, const char * argv[]) {
     int matrix_dim = atoi(argv[2]);
     ifstream infile(argv[3]);
     
-    vector<int> dim(matrix_dim);
+    vector<int> vector_dim(matrix_dim);
     
     // initialize vector of vectors (matrix representation)
-    vector< vector<int> > M1(matrix_dim, dim), M2(matrix_dim, dim), M3(matrix_dim, dim);
+    vector< vector<int> > A(matrix_dim, vector_dim), B(matrix_dim, vector_dim), C(matrix_dim, vector_dim);
     
-    read_file(infile, M1, M2, matrix_dim);
+    // store values in matrix A and B
+    read_file(infile, A, B, matrix_dim);
     infile.close();
+    
+    int cross_over = 2;
+    strassen_pow2(A, B, C, 0, 0, 0, 0, cross_over, matrix_dim);
+//    matrix_mult_reg(A, B, C, 0, 0, 0, 0, matrix_dim);
+    
+    matrix_print(C);
     
     return 0;
 }
