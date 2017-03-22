@@ -9,13 +9,12 @@
 
 #include <stdio.h>
 #include <vector>
-#include <cmath>
-#include <time.h>
 #include <fstream>
+#include <cmath>
 #include "matrix-functions.hpp"
 
 /*
- * Strassen's matrix multiplication algorithm
+ * Strassen's matrix multiplication algorithm post-padded
  * @param A : reference to matrix 1
  * @param B : reference to matrix 2
  * @param C : C = A * B (matrix product)
@@ -28,7 +27,23 @@
  * @param cross_over : matrix dimension to switch to regular matrix multiplication
  * @param n : dimension of the matrices
  */
-void strassen_pow2(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int cross_over, int n);
+void strassen_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int cross_over, int n);
+
+/*
+ * Strassen's matrix multiplication pre-padded, finds optimal padding based on given cross_over point
+ * extracts matrix diagonal
+ * @param cross_over : matrix dimension to switch to regular matrix multiplication
+ * @param n : dimension of the matrices
+ */
+void strassen(ifstream &file, int cross_over, int n);
+
+/*
+ * Function reads in 2D matrix values into a vector of vectors
+ * @param infile : reference to the input file
+ * @param A : reference to Matrix to read in values
+ * @param n : # of matrix values to read in per matrix
+ */
+void read_file(ifstream &infile, vector< vector<int> > &A, int n);
 
 /*
  * Finds the optimal number of rows/columns to pad based on the cross_over value
@@ -37,41 +52,5 @@ void strassen_pow2(vector< vector<int> > &A, vector< vector<int> > &B, vector< v
  */
 int find_optimal_matrix_padding(int cross_over, int n);
 
-/*
- * Fills in the matrix with random 0s or 1s
- * @param A : reference to matrix 1
- * @param B : reference to matrix 2
- * @param n : matrix dimensions to fill in up to
- */
-void fill_matrix_rand(vector< vector<int> > &A, vector< vector<int> > &B, int n);
-
-/*
- * Tests for the optimal cross-over value by tracking time, reads output to file
- * @param file : reference to output file
- * @param n : pre-padded matrix dimension
- * @param num_trials : # of trials to run strassens algorithm
- * @param pow_2 : whether to increment testing cross_over points by a power of 2 or to test all points
- */
-void test_cross_over_strassens(ofstream &file, int n, int num_trials, bool pow_2);
-
-/*
- * Finds the optimal cross-over value for matrices from range start_dim to 
- * end_dim (inclusive), reads output to file
- * @param start_dim : starting matrix dimension to test from
- * @param end_dim : end matrix dimension to test to
- * @param num_trials : # of trials to run in test_cross_over_strassens
- * @param pow_2 : whether to increment testing cross_over points by a power of 2 or to test all points
- */
-void test_cross_over_all_matrices(int start_dim, int end_dim, int num_trials, bool pow_2);
-
-/*
- * Pad matrix with 0's so Strassen's will work
- * @param A : reference to matrix 1
- * @param B : reference to matrix 2
- * @param C : reference to matrix solution
- * @param cross_over : matrix dimension to switch to regular matrix multiplication
- * @param n : dimension of the matrices
- */
-void pad_matrix(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> >&C, int cross_over, int n);
 #endif /* strassens_algorithm_hpp */
 
