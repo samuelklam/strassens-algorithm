@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 
-int size = 45;
+int size = 50;
 
 double f(double n){
     return 2*pow(n,3)-pow(n,2);
@@ -28,21 +28,20 @@ void s(double n, double f_table[], double s_table[]){
 }
 
 int main(){
-    double f_table[size-1];
-    double s_table[size-1];
-    for(int n = 1; n < size; n ++){
+    double f_table[size];
+    double s_table[size];
+    for(int n = 1; n < size+1; n ++){
         s(n, f_table, s_table);
     }
-    for(int i = 0; i < size -1; i++){
+    for(int i = 0; i < size; i++){
         printf("f_table: n: %d, %f      ", i+1, f_table[i]);
         printf("s_table: n: %d, %f      ",i+1, s_table[i]);
         if(f_table[i] < s_table[i]){
-            printf("fastest: n: %d, Conventional\n", i+1);
+            printf("fastest: n: %d, Conventional\n", i + 1);
         } else {
-            printf("fastest: n: %d, Strassen\n", i+1);
+            printf("fastest: n: %d, Strassen\n", i + 1);
         }
     }
-
 }
 
 
