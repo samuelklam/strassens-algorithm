@@ -25,8 +25,7 @@ int main(int argc, const char * argv[]) {
 
 //    strassen(infile, cross_over, matrix_dim);
     
-    // 58, 62
-    test_cross_over_all_matrices(83, 85, 50, 0);
+    test_cross_over_all_matrices(2048, 2048, 1, 1);
     
     return 0;
 }

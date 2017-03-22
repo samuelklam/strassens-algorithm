@@ -1,1 +1,1 @@
-matrix dimension: 63, time: 2390.52, cross-over: 63, padding: 0, num_trials: 50
+matrix dimension: 2048, time: 47.4903, cross-over: 64, padding: 0, num_trials: 1

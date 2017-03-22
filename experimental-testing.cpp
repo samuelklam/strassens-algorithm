@@ -55,11 +55,12 @@ void test_cross_over_strassens(ofstream &file, int n, int num_trials, bool pow_2
             strassen_pad(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, new_matrix_dim);
         }
         
-        end = clock() - start;
+        end = clock();
+        double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
         
         // greedily keep track of the minimum
-        if (end < min_time_cross_over) {
-            min_time_cross_over = end;
+        if (time_spent < min_time_cross_over) {
+            min_time_cross_over = time_spent;
             min_cross_over = cross_over;
             optimal_padding = padding;
         }
