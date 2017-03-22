@@ -21,11 +21,11 @@ int main(int argc, const char * argv[]) {
     ifstream infile(argv[3]);
     
     // optimal pre-determined cross_over point
-    int cross_over = 2;
+    int cross_over = 64;
 
 //    strassen(infile, cross_over, matrix_dim);
     
-    test_cross_over_all_matrices(2048, 2048, 1, 1);
+    test_cross_over_all_matrices(2048*2, 2048*2, 1, 1);
     
     return 0;
 }
