@@ -193,7 +193,6 @@ void test_cross_over_all_matrices(int start_dim, int end_dim) {
 }
 
 void pad_matrix(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int cross_over, int n){
->>>>>>> aedb726ae9eda6c5af409014802839d7390befae
     // determines the next dimension where Strassen can run
     if(cross_over < n){
         while(n > cross_over){
