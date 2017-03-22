@@ -77,7 +77,7 @@ int main(int argc, const char * argv[]) {
 //    matrix_print(B);
     
     
-    test_cross_over_all_matrices(64, 70);
+    test_cross_over_all_matrices(1024, 1024, 1);
     
     return 0;
 }

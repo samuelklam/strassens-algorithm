@@ -135,23 +135,35 @@ void fill_matrix_rand(vector< vector<int> > &A, vector< vector<int> > &B, int n)
     }
 }
 
-void test_cross_over_strassens(ofstream &file, int n) {
+void test_cross_over_strassens(ofstream &file, int n, int num_trials, bool pow_2) {
     
     double min_time_cross_over = INT_MAX;
     int min_cross_over = 0;
-//    int end_cross = min(64, n);
     int end_cross = n;
     int optimal_padding = 0;
     int padding = 0;
-    int num_trials = 10;
     
     clock_t start, end;
     srand((unsigned)time(NULL));
     
+    vector<int> cross_over_vec;
+    if (pow_2) {
+        for (int i = 64; i <= end_cross; pow(i, 2)) {
+            cross_over_vec.push_back(i);
+        }
+    }
+    else {
+        for (int i = 15; i <= end_cross; i++) {
+            cross_over_vec.push_back(i);
+        }
+    }
+    
     // start testing cross-over val from 15 to determined end_cross
-    for (int i = 15; i <= end_cross; i ++) {
+    for (int i = 0; i <= cross_over_vec.size(); i++) {
         
-        padding = find_optimal_matrix_padding(i, n);
+        int cross_over = cross_over_vec[i];
+        
+        padding = find_optimal_matrix_padding(cross_over, n);
         
         // initialize new matrix dimensions with determined padding
         int new_matrix_dim = n + padding;
@@ -166,14 +178,14 @@ void test_cross_over_strassens(ofstream &file, int n) {
         
         // run for # of trials to find average strassen computation time
         for (int j = 0; j < num_trials; j++) {
-            strassen_pow2(A, B, C, 0, 0, 0, 0, 0, 0, i, new_matrix_dim);
+            strassen_pow2(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, new_matrix_dim);
         }
         
         end = clock() - start;
         
         if (end < min_time_cross_over) {
             min_time_cross_over = end;
-            min_cross_over = i;
+            min_cross_over = cross_over;
             optimal_padding = padding;
         }
     }
@@ -182,14 +194,15 @@ void test_cross_over_strassens(ofstream &file, int n) {
     file << "matrix dimension: " << n << ", time: " << min_time_cross_over / num_trials << ", cross-over: " << min_cross_over << ", padding: " << optimal_padding << ", num_trials: " << num_trials << endl;
 }
 
-void test_cross_over_all_matrices(int start_dim, int end_dim) {
+void test_cross_over_all_matrices(int start_dim, int end_dim, int num_trials, bool pow_2) {
     ofstream myfile;
     myfile.open("output.txt");
-    
+
     // tests matrices up to dim 64
     for (int i = start_dim; i <= end_dim; i++) {
-        test_cross_over_strassens(myfile, i);
+        test_cross_over_strassens(myfile, i, num_trials, pow_2);
     }
+    myfile.close();
 }
 
 void pad_matrix(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int cross_over, int n){
