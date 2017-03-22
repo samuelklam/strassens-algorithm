@@ -9,6 +9,9 @@
 
 #include <stdio.h>
 #include <vector>
+#include <cmath>
+#include <time.h>
+#include <fstream>
 #include "matrix-functions.hpp"
 
 /*
@@ -26,6 +29,14 @@
  * @param n : dimension of the matrices
  */
 void strassen_pow2(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int cross_over, int n);
+
+int find_optimal_matrix_padding(int cross_over, int n);
+
+void fill_matrix_rand(vector< vector<int> > &A, vector< vector<int> > &B, int n);
+
+void test_cross_over_strassens(ofstream &file, int n);
+
+void test_cross_over_all_matrices(int start_dim, int end_dim);
 
 /*
  * Pad matrix with 0's so Strassen's will work

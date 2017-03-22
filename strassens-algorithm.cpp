@@ -1,12 +1,10 @@
 //
 //  strassens-algorithm.cpp
 //
-//  Created by Samuel K. Lam on 3/20/17.
-//  Copyright © 2017 Samuel K. Lam. All rights reserved.
+//  Implementation of Strassen's Algorithm
 //
 
 #include "strassens-algorithm.hpp"
-#include <cmath>
 
 void strassen_pow2(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int cross_over, int n) {
     if (n <= cross_over) {
@@ -109,7 +107,91 @@ void strassen_pow2(vector< vector<int> > &A, vector< vector<int> > &B, vector< v
     }
 }
 
-void pad_matrix(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> >&C, int cross_over, int n){
+int find_optimal_matrix_padding(int cross_over, int n) {
+    
+    int k = 0;
+    int r_term;
+    
+    // padding is not necessary
+    if (n <= cross_over) {
+        return 0;
+    }
+    
+    while (1) {
+        r_term = cross_over * pow(2, k);
+        if (n <= r_term) {
+            return r_term - n;
+        }
+        k++;
+    }
+}
+
+void fill_matrix_rand(vector< vector<int> > &A, vector< vector<int> > &B, int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            A[i][j] = rand() % 2;
+            B[i][j] = rand() % 2;
+        }
+    }
+}
+
+void test_cross_over_strassens(ofstream &file, int n) {
+    
+    // we start testing cross-over val from 15
+    // we end testing at 64 or n
+    double min_time_cross_over = INT_MAX;
+    int min_cross_over = 0;
+//    int end_cross = min(64, n);
+    int end_cross = n;
+    int optimal_padding = 0;
+    int padding = 0;
+    int num_trials = 10;
+    
+    clock_t start, end;
+    srand((unsigned)time(NULL));
+    
+    for (int i = 15; i <= end_cross; i ++) {
+        
+        padding = find_optimal_matrix_padding(i, n);
+        
+        int new_matrix_dim = n + padding;
+        vector<int> vector_dim(new_matrix_dim);
+        
+        // initialize vector of vectors (matrix representation)
+        vector< vector<int> > A(new_matrix_dim, vector_dim), B(new_matrix_dim, vector_dim), C(new_matrix_dim, vector_dim);
+        
+        fill_matrix_rand(A, B, n);
+        
+        start = clock();
+        
+        // run for # of trials to find average strassen computation time
+        for (int j = 0; j < num_trials; j++) {
+            strassen_pow2(A, B, C, 0, 0, 0, 0, 0, 0, i, new_matrix_dim);
+        }
+        
+        end = clock() - start;
+        if (end < min_time_cross_over) {
+            min_time_cross_over = end;
+            min_cross_over = i;
+            optimal_padding = padding;
+        }
+    }
+    
+    cout << "matrix dimension: " << n << ", time: " << min_time_cross_over / num_trials << ", cross-over: " << min_cross_over << ", padding: " << optimal_padding << ", num_trials: " << num_trials << endl;
+    file << "matrix dimension: " << n << ", time: " << min_time_cross_over / num_trials << ", cross-over: " << min_cross_over << ", padding: " << optimal_padding << ", num_trials: " << num_trials << endl;
+}
+
+void test_cross_over_all_matrices(int start_dim, int end_dim) {
+    ofstream myfile;
+    myfile.open("output.txt");
+    
+    // tests matrices up to dim 64
+    for (int i = start_dim; i <= end_dim; i++) {
+        test_cross_over_strassens(myfile, i);
+    }
+}
+
+void pad_matrix(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int cross_over, int n){
     // determines the next dimension where Strassen can run
     if(cross_over < n){
         while(n > cross_over){

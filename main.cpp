@@ -70,10 +70,14 @@ int main(int argc, const char * argv[]) {
     cout << "Matrix C = A*B" << endl;
     matrix_print(C);
     
-    pad_matrix(A, B, C, cross_over, matrix_dim);
-    cout << "Matrix A padded" << endl;
-    matrix_print(A);
-    cout << "Matrix B padded" << endl;
-    matrix_print(B);
+//    pad_matrix(A, B, C, cross_over, matrix_dim);
+//    cout << "Matrix A padded" << endl;
+//    matrix_print(A);
+//    cout << "Matrix B padded" << endl;
+//    matrix_print(B);
+    
+    
+    test_cross_over_all_matrices(64, 70);
+    
     return 0;
 }
