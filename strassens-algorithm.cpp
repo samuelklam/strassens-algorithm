@@ -137,8 +137,6 @@ void fill_matrix_rand(vector< vector<int> > &A, vector< vector<int> > &B, int n)
 
 void test_cross_over_strassens(ofstream &file, int n) {
     
-    // we start testing cross-over val from 15
-    // we end testing at 64 or n
     double min_time_cross_over = INT_MAX;
     int min_cross_over = 0;
 //    int end_cross = min(64, n);
@@ -150,10 +148,12 @@ void test_cross_over_strassens(ofstream &file, int n) {
     clock_t start, end;
     srand((unsigned)time(NULL));
     
+    // start testing cross-over val from 15 to determined end_cross
     for (int i = 15; i <= end_cross; i ++) {
         
         padding = find_optimal_matrix_padding(i, n);
         
+        // initialize new matrix dimensions with determined padding
         int new_matrix_dim = n + padding;
         vector<int> vector_dim(new_matrix_dim);
         
@@ -170,6 +170,7 @@ void test_cross_over_strassens(ofstream &file, int n) {
         }
         
         end = clock() - start;
+        
         if (end < min_time_cross_over) {
             min_time_cross_over = end;
             min_cross_over = i;

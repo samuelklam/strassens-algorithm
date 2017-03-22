@@ -30,12 +30,33 @@
  */
 void strassen_pow2(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int cross_over, int n);
 
+/*
+ * Finds the optimal number of rows/columns to pad based on the cross_over value
+ * @param cross_over : given cross_over value (optimal or not)
+ * @param n : pre-padded matrix dimension
+ */
 int find_optimal_matrix_padding(int cross_over, int n);
 
+/*
+ * Fills in the matrix with random 0s or 1s
+ * @param A : reference to matrix 1
+ * @param B : reference to matrix 2
+ * @param n : matrix dimensions to fill in up to
+ */
 void fill_matrix_rand(vector< vector<int> > &A, vector< vector<int> > &B, int n);
 
+/*
+ * Tests for the optimal cross-over value by tracking time, reads output to file
+ * @param file : reference to output file
+ * @param n : pre-padded matrix dimension
+ */
 void test_cross_over_strassens(ofstream &file, int n);
 
+/*
+ * Finds the optimal cross-over value for matrices from range start_dim to end_dim
+ * @param start_dim : starting matrix dimension to test from
+ * @param end_dim : end matrix dimension to test to
+ */
 void test_cross_over_all_matrices(int start_dim, int end_dim);
 
 /*
