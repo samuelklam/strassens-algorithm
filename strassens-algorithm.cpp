@@ -148,18 +148,21 @@ void test_cross_over_strassens(ofstream &file, int n, int num_trials, bool pow_2
     
     vector<int> cross_over_vec;
     if (pow_2) {
-        for (int i = 64; i <= end_cross; pow(i, 2)) {
+        // test cross_overs by interval powers of 2
+        int i = 64;
+        while (i <= 64) {
             cross_over_vec.push_back(i);
+            i *= 2;
         }
     }
     else {
+        // start testing cross-over val from 15 to determined end_cross
         for (int i = 15; i <= end_cross; i++) {
             cross_over_vec.push_back(i);
         }
     }
     
-    // start testing cross-over val from 15 to determined end_cross
-    for (int i = 0; i <= cross_over_vec.size(); i++) {
+    for (int i = 0; i < cross_over_vec.size(); i++) {
         
         int cross_over = cross_over_vec[i];
         

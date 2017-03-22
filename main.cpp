@@ -98,8 +98,7 @@ int main(int argc, const char * argv[]) {
 //    cout << "Matrix B padded" << endl;
 //    matrix_print(B);
     
-    
-    test_cross_over_all_matrices(1024, 1024, 1);
+    test_cross_over_all_matrices(2048, 2048, 1, 1);
     
     return 0;
 }
