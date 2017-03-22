@@ -23,9 +23,10 @@ int main(int argc, const char * argv[]) {
     // optimal pre-determined cross_over point
     int cross_over = 2;
 
-    strassen(infile, cross_over, matrix_dim);
+//    strassen(infile, cross_over, matrix_dim);
     
-//    test_cross_over_all_matrices(2048, 2048, 1, 1);
+    // 58, 62
+    test_cross_over_all_matrices(83, 85, 50, 0);
     
     return 0;
 }

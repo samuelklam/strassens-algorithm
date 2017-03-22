@@ -147,7 +147,7 @@ int find_optimal_matrix_padding(int cross_over, int n) {
     int k = 0;
     int r_term;
     
-    // padding is not necessary
+    // padding is not necessary, thus return 0
     if (n <= cross_over) {
         return 0;
     }
