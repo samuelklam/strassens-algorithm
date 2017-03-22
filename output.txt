@@ -1,0 +1,7 @@
+matrix dimension: 64, time: 2269.6, cross-over: 64, padding: 0, num_trials: 10
+matrix dimension: 65, time: 2438.4, cross-over: 65, padding: 0, num_trials: 10
+matrix dimension: 66, time: 2485.3, cross-over: 66, padding: 0, num_trials: 10
+matrix dimension: 67, time: 2744.5, cross-over: 34, padding: 1, num_trials: 10
+matrix dimension: 68, time: 2745.4, cross-over: 68, padding: 0, num_trials: 10
+matrix dimension: 69, time: 3103.2, cross-over: 35, padding: 1, num_trials: 10
+matrix dimension: 70, time: 2962.2, cross-over: 35, padding: 0, num_trials: 10

@@ -92,9 +92,14 @@ int main(int argc, const char * argv[]) {
     cout << "Matrix B" << endl;
     matrix_print(B);
     
-    // change crossover point
-    int cross_over = 3;
-    // multiply and print outputs
-    aux_matrix_multiplier(A, B, C, cross_over, matrix_dim);
+//    pad_matrix(A, B, C, cross_over, matrix_dim);
+//    cout << "Matrix A padded" << endl;
+//    matrix_print(A);
+//    cout << "Matrix B padded" << endl;
+//    matrix_print(B);
+    
+    
+    test_cross_over_all_matrices(64, 70);
+    
     return 0;
 }
