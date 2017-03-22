@@ -53,7 +53,8 @@ void fill_matrix_rand(vector< vector<int> > &A, vector< vector<int> > &B, int n)
 void test_cross_over_strassens(ofstream &file, int n);
 
 /*
- * Finds the optimal cross-over value for matrices from range start_dim to end_dim
+ * Finds the optimal cross-over value for matrices from range start_dim to 
+ * end_dim (inclusive), reads output to file
  * @param start_dim : starting matrix dimension to test from
  * @param end_dim : end matrix dimension to test to
  */
