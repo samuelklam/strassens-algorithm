@@ -6,6 +6,7 @@
 //
 
 #include "strassens-algorithm.hpp"
+#include <cmath>
 
 void strassen_pow2(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int cross_over, int n) {
     if (n <= cross_over) {
@@ -107,3 +108,36 @@ void strassen_pow2(vector< vector<int> > &A, vector< vector<int> > &B, vector< v
         
     }
 }
+
+void pad_matrix(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> >&C, int cross_over, int n){
+    // determines the next dimension where Strassen can run
+    if(cross_over < n){
+        while(n > cross_over){
+            cross_over = cross_over*2;
+        }
+        // if next largest dimension is same as n, nothing to be done
+        if(cross_over != n){
+            // determines pad amount
+            int pad_amount = cross_over - n;
+            
+             // add pad_amount of 0's to each row
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < pad_amount; j++){
+                    A.at(i).push_back(0);
+                    B.at(i).push_back(0);
+                    C.at(i).push_back(0);
+                }
+            }
+            // then adds pad_amount rows of length
+            for(int j = 0; j < pad_amount; j++){
+                vector<int> pad_rows (cross_over, 0);
+                A.push_back(pad_rows);
+                B.push_back(pad_rows);
+                C.push_back(pad_rows);
+            }
+        }
+    }
+}
+
+
+

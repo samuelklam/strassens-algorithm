@@ -60,12 +60,20 @@ int main(int argc, const char * argv[]) {
     // store values in matrix A and B
     read_file(infile, A, B, matrix_dim);
     infile.close();
-    
-    int cross_over = 2;
+    cout << "Matrix A" << endl;
+    matrix_print(A);
+    cout << "Matrix B" << endl;
+    matrix_print(B);
+    int cross_over = 3;
     strassen_pow2(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, new_matrix_dim);
 //    matrix_mult_reg(A, B, C, 0, 0, 0, 0, 0, 0, matrix_dim);
-    
+    cout << "Matrix C = A*B" << endl;
     matrix_print(C);
     
+    pad_matrix(A, B, C, cross_over, matrix_dim);
+    cout << "Matrix A padded" << endl;
+    matrix_print(A);
+    cout << "Matrix B padded" << endl;
+    matrix_print(B);
     return 0;
 }
