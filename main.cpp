@@ -24,7 +24,7 @@ int main(int argc, const char * argv[]) {
 
 //    strassen(infile, cross_over, matrix_dim);
 //    strassen_odd_padding(infile, cross_over, matrix_dim);
-    test_cross_over_all_matrices(2049, 2049, 1, 1, 2);
+    test_cross_over_all_matrices(1, 70, 10, 0, 3);
 
     return 0;
 }

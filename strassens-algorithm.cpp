@@ -217,7 +217,7 @@ void strassen_odd_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector
 }
 
 void strassen_odd_padding(ifstream &file, int cross_over, int n){
-    // initialize new matrix dimensions with determined padding
+    // initialize matrix
     vector<int> vector_dim(n);
     
     // initialize vector of vectors (matrix representation)
@@ -287,4 +287,32 @@ int find_pow2_matrix_padding(int cross_over, int n) {
         }
         k++;
     }
+}
+
+bool helper_done(int cross_over, int n){
+    while (n > cross_over){
+        if (n%2 != 0){
+            return false;
+        }
+        else {
+            n = n/2;
+            if(n <= cross_over){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+int find_opt_matrix_padding(int cross_over, int n){
+    int pad = 0;
+    while(1){
+        if (helper_done(cross_over, n + pad)){
+            break;
+        }
+        else {
+            pad++;
+        }
+    }
+    return pad;
 }

@@ -29,6 +29,21 @@
  */
 void strassen_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int cross_over, int n);
 
+
+/*
+ * Strassen's matrix multiplication algorithm, pad only when odd
+ * @param A : reference to matrix 1
+ * @param B : reference to matrix 2
+ * @param C : C = A * B (matrix product)
+ * @param r1 : starting row index for A
+ * @param c1 : starting column index for A
+ * @param r2 : starting row index for B
+ * @param c2 : starting column index for B
+ * @param r3 : starting row index for C
+ * @param c3 : starting column index for C
+ * @param cross_over : matrix dimension to switch to regular matrix multiplication
+ * @param n : dimension of the matrices
+ */
 void strassen_odd_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int cross_over, int n);
 
 /*
@@ -39,7 +54,21 @@ void strassen_odd_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector
  */
 void strassen(ifstream &file, int cross_over, int n);
 
+/*
+ * Strassen's matrix multiplication, initializes matrix values,
+ * extracts matrix diagonal
+ * @param cross_over : matrix dimension to switch to regular matrix multiplication
+ * @param n : dimension of the matrices
+ */
 void strassen_odd_padding(ifstream &file, int cross_over, int n);
+
+/*
+ * Strassen's matrix multiplication, where pad is determined by any number in range [cross_over/2, cross_over],
+ * extracts matrix diagonal
+ * @param cross_over : matrix dimension to switch to regular matrix multiplication
+ * @param n : dimension of the matrices
+ */
+void strassen_opt_padding(ifstream &file, int cross_over, int n);
 
 /*
  * Function reads in 2D matrix values into a vector of vectors
