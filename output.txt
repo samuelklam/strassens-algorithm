@@ -1,0 +1,1 @@
+matrix dimension: 2049, time: 62.14, cross-over: 64, padding: 0, num_trials: 1
