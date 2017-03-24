@@ -106,6 +106,101 @@ void strassen_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector< ve
     }
 }
 
+void strassen(ifstream &file, int cross_over, int n, int opt) {
+    
+    int padding;
+    if (opt == 1) {
+        padding = find_opt_matrix_padding(cross_over, n);
+    }
+    else if (opt == 0) {
+        padding = find_pow2_matrix_padding(cross_over, n);
+    }
+    else {
+        padding = 0;
+    }
+    
+    int new_matrix_dim = n + padding;
+    
+    vector<int> vector_dim(new_matrix_dim);
+    
+    // initialize vector of vectors (matrix representation)
+    vector< vector<int> > A(new_matrix_dim, vector_dim), B(new_matrix_dim, vector_dim), C(new_matrix_dim, vector_dim);
+    
+    read_file(file, A, n);
+    read_file(file, B, n);
+    file.close();
+    
+    if (opt == 1 || opt == 0) {
+        strassen_pad(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, new_matrix_dim);
+    }
+    else {
+        matrix_mult_reg(A, B, C, 0, 0, 0, 0, 0, 0, n);
+    }
+    
+    matrix_print(C, n);
+    
+    matrix_print_diag(C, n);
+    cout << endl;
+}
+
+void read_file(ifstream &infile, vector< vector<int> > &A, int n) {
+    int val;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            infile >> val;
+            A[i][j] = val;
+        }
+    }
+}
+
+
+int find_pow2_matrix_padding(int cross_over, int n) {
+    
+    int k = 0;
+    int r_term;
+    
+    // padding is not necessary, thus return 0
+    if (n <= cross_over) {
+        return 0;
+    }
+    
+    while (1) {
+        r_term = cross_over * pow(2, k);
+        if (n <= r_term) {
+            return r_term - n;
+        }
+        k++;
+    }
+}
+
+bool helper_done(int cross_over, int n){
+    while (n > cross_over){
+        if (n%2 != 0){
+            return false;
+        }
+        else {
+            n = n/2;
+            if(n <= cross_over){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+int find_opt_matrix_padding(int cross_over, int n){
+    int pad = 0;
+    while(1){
+        if (helper_done(cross_over, n + pad)){
+            break;
+        }
+        else {
+            pad++;
+        }
+    }
+    return pad;
+}
+
 void strassen_odd_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int cross_over, int n) {
     if (n <= cross_over) {
         matrix_mult_reg(A, B, C, r1, c1, r2, c2, r3, c3, n);
@@ -237,114 +332,4 @@ void strassen_odd_padding(ifstream &file, int cross_over, int n){
     strassen_odd_pad(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, n);
     matrix_print(C, n);
     cout << endl;
-}
-
-
-void strassen(ifstream &file, int cross_over, int n, bool opt) {
-    if(opt == 1){
-        int padding = find_opt_matrix_padding(cross_over, n);
-        
-        // initialize new matrix dimensions with determined padding
-        int new_matrix_dim = n + padding;
-        vector<int> vector_dim(new_matrix_dim);
-        
-        // initialize vector of vectors (matrix representation)
-        vector< vector<int> > A(new_matrix_dim, vector_dim), B(new_matrix_dim, vector_dim), C(new_matrix_dim, vector_dim);
-        
-        read_file(file, A, n);
-        read_file(file, B, n);
-        file.close();
-        
-        strassen_pad(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, new_matrix_dim);
-        // extract diagonal of the matrix
-        matrix_print_diag(C, n);
-        cout << endl;
-    }
-    else if(opt == 0){
-        int padding = find_pow2_matrix_padding(cross_over, n);
-        
-        // initialize new matrix dimensions with determined padding
-        int new_matrix_dim = n + padding;
-        vector<int> vector_dim(new_matrix_dim);
-        
-        // initialize vector of vectors (matrix representation)
-        vector< vector<int> > A(new_matrix_dim, vector_dim), B(new_matrix_dim, vector_dim), C(new_matrix_dim, vector_dim);
-        
-        read_file(file, A, n);
-        read_file(file, B, n);
-        file.close();
-        
-        strassen_pad(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, new_matrix_dim);
-        
-        //    matrix_mult_reg(A, B, C, 0, 0, 0, 0, 0, 0, n);
-        
-        // print matrix
-        //    matrix_print(C, n);
-        
-        // extract diagonal of the matrix
-        matrix_print_diag(C, n);
-        cout << endl;
-    }
-    else{
-        cout << "Improper Usage" << endl;
-    }
-    
-}
-
-void read_file(ifstream &infile, vector< vector<int> > &A, int n) {
-    int val;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            infile >> val;
-            A[i][j] = val;
-        }
-    }
-}
-
-
-int find_pow2_matrix_padding(int cross_over, int n) {
-    
-    int k = 0;
-    int r_term;
-    
-    // padding is not necessary, thus return 0
-    if (n <= cross_over) {
-        return 0;
-    }
-    
-    while (1) {
-        r_term = cross_over * pow(2, k);
-        if (n <= r_term) {
-            return r_term - n;
-        }
-        k++;
-    }
-}
-
-bool helper_done(int cross_over, int n){
-    while (n > cross_over){
-        if (n%2 != 0){
-            return false;
-        }
-        else {
-            n = n/2;
-            if(n <= cross_over){
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-int find_opt_matrix_padding(int cross_over, int n){
-    int pad = 0;
-    while(1){
-        if (helper_done(cross_over, n + pad)){
-            break;
-        }
-        else {
-            pad++;
-        }
-    }
-    return pad;
 }
