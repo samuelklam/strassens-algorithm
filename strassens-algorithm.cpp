@@ -106,7 +106,7 @@ void strassen_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector< ve
     }
 }
 
-void strassen(ifstream &file, int cross_over, int n, int opt) {
+void strassen(ifstream &file, int cross_over, int n, int opt, bool matrix_fill, int print_bool) {
     
     int padding;
     if (opt == 1) {
@@ -126,9 +126,14 @@ void strassen(ifstream &file, int cross_over, int n, int opt) {
     // initialize vector of vectors (matrix representation)
     vector< vector<int> > A(new_matrix_dim, vector_dim), B(new_matrix_dim, vector_dim), C(new_matrix_dim, vector_dim);
     
-    read_file(file, A, n);
-    read_file(file, B, n);
-    file.close();
+    if (matrix_fill) {
+        read_file(file, A, n);
+        read_file(file, B, n);
+        file.close();
+    }
+    else {
+        fill_matrix_rand(A, B, n);
+    }
     
     if (opt == 1 || opt == 0) {
         strassen_pad(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, new_matrix_dim);
@@ -137,9 +142,13 @@ void strassen(ifstream &file, int cross_over, int n, int opt) {
         matrix_mult_reg(A, B, C, 0, 0, 0, 0, 0, 0, n);
     }
     
-    matrix_print(C, n);
     
-    matrix_print_diag(C, n);
+    if (print_bool >= 2) {
+        matrix_print(C, n);
+    }
+    if (print_bool >= 1) {
+        matrix_print_diag(C, n);
+    }
     cout << endl;
 }
 
@@ -152,7 +161,6 @@ void read_file(ifstream &infile, vector< vector<int> > &A, int n) {
         }
     }
 }
-
 
 int find_pow2_matrix_padding(int cross_over, int n) {
     
@@ -179,7 +187,7 @@ bool helper_done(int cross_over, int n){
             return false;
         }
         else {
-            n = n/2;
+            n /= 2;
             if(n <= cross_over){
                 return true;
             }
@@ -199,4 +207,23 @@ int find_opt_matrix_padding(int cross_over, int n){
         }
     }
     return pad;
+}
+
+int find_opt_matrix_padding_test(int cross_over, int n) {
+    
+    int k = 0;
+    int r_term;
+    
+    // padding is not necessary, thus return 0
+    if (n <= cross_over) {
+        return 0;
+    }
+    
+    while (1) {
+        r_term = cross_over * pow(2, k);
+        if (n <= r_term) {
+            return r_term - n;
+        }
+        k++;
+    }
 }

@@ -36,8 +36,10 @@ void strassen_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector< ve
  * @param cross_over : matrix dimension to switch to regular matrix multiplication
  * @param n : dimension of the matrices
  * @param opt : flag to set whether to run conventional, optimal padding or power of 2 padding
+ * @param matrix_fill : 1 denotes read in matrix values from file, 2 fill with random 0/1 values
+ * @param print_bool : 2 prints whole matrix and diagonal, 1 prints diagonal, 0 prints nothing
  */
-void strassen(ifstream &file, int cross_over, int n, int opt);
+void strassen(ifstream &file, int cross_over, int n, int opt, bool matrix_fill, int print_bool);
 
 /*
  * Function reads in 2D matrix values into a vector of vectors
@@ -57,7 +59,7 @@ int find_pow2_matrix_padding(int cross_over, int n);
 
 /*
  * Algo 3: Finds the optimal number of rows/columns to pad based on the cross_over value, such that
- * you can use strassen without having to pad to safely reach a cross_over value
+ * you can use strassen without having to pad to safely reach a designated cross_over value (<= cross_over)
  * @param cross_over : given cross_over value (optimal or not)
  * @param n : pre-padded matrix dimension
  * @return : returns # of rows/cols to pad
@@ -65,20 +67,11 @@ int find_pow2_matrix_padding(int cross_over, int n);
 int find_opt_matrix_padding(int cross_over, int n);
 
 /*
- * Strassen's matrix multiplication algorithm, pad only when odd
- * @param A : reference to matrix 1
- * @param B : reference to matrix 2
- * @param C : C = A * B (matrix product)
- * @param r1 : starting row index for A
- * @param c1 : starting column index for A
- * @param r2 : starting row index for B
- * @param c2 : starting column index for B
- * @param r3 : starting row index for C
- * @param c3 : starting column index for C
- * @param cross_over : matrix dimension to switch to regular matrix multiplication
- * @param n : dimension of the matrices
+ * Finds the optimal number of rows/columns to pad given one cross_over value, used for testing
+ * @param cross_over : given cross_over value (optimal or not)
+ * @param n : pre-padded matrix dimension
  */
-void strassen_odd_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int cross_over, int n);
+int find_opt_matrix_padding_test(int cross_over, int n);
 
 #endif /* strassens_algorithm_hpp */
 

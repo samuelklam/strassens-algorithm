@@ -20,9 +20,8 @@
  * @param n : pre-padded matrix dimension
  * @param num_trials : # of trials to run strassens algorithm
  * @param pow_2 : whether to increment testing cross_over points by a power of 2 or to test all points
- * @param algo : takes value 1, 2, 3. Flag to run algo 1, 2, or 3
  */
-void test_cross_over_strassens(ofstream &file, int n, int num_trials, bool pow_2, int algo);
+void test_cross_over_strassens(ofstream &file, int n, int num_trials, bool pow_2);
 
 /*
  * Finds the optimal cross-over value for matrices from range start_dim to
@@ -31,8 +30,7 @@ void test_cross_over_strassens(ofstream &file, int n, int num_trials, bool pow_2
  * @param end_dim : end matrix dimension to test to
  * @param num_trials : # of trials to run in test_cross_over_strassens
  * @param pow_2 : whether to increment testing cross_over points by a power of 2 or to test all points
- * @param algo : takes value 1, 2, 3. Flag to run algo 1, 2, or 3
  */
-void test_cross_over_all_matrices(int start_dim, int end_dim, int num_trials, bool pow_2, int algo);
+void test_cross_over_all_matrices(int start_dim, int end_dim, int num_trials, bool pow_2);
 
 #endif /* experimental_testing_hpp */
