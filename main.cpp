@@ -1,7 +1,7 @@
 //
 //  main.cpp
 //
-//  Created on 3/18/17.
+//  Driver function to read in matrices A, B and calculate C = A*B using Strassen-Variant algo
 //
 
 #include <iostream>
@@ -21,12 +21,11 @@ int main(int argc, const char * argv[]) {
     ifstream infile(argv[3]);
     
     // optimal pre-determined cross_over point
-    int cross_over = 63;
-    int opt_algo = 1;
+    int cross_over = 64;
+    int strassen_algo_flag = 1;
     int read_matrix_bool = 1;
-    int print_matrix_bool = 1;
-    strassen(infile, cross_over, matrix_dim, opt_algo, read_matrix_bool, print_matrix_bool);
+    int print_matrix_flag = 1;
+    strassen(infile, cross_over, matrix_dim, strassen_algo_flag, read_matrix_bool, print_matrix_flag);
 
-//    test_cross_over_all_matrices(64, 64, 25, 0);
     return 0;
 }

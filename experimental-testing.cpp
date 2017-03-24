@@ -36,7 +36,7 @@ void test_cross_over_strassens(ofstream &file, int n, int num_trials, bool pow_2
     for (int i = 0; i < cross_over_vec.size(); i++) {
         
         int cross_over = cross_over_vec[i];
-        padding = find_pow2_matrix_padding(cross_over, n);
+        padding = find_opt_matrix_padding_test(cross_over, n);
         
         // initialize new matrix dimensions with determined padding
         int new_matrix_dim = n + padding;

@@ -113,7 +113,7 @@ void strassen(ifstream &file, int cross_over, int n, int opt, bool matrix_fill, 
         padding = find_opt_matrix_padding(cross_over, n);
     }
     else if (opt == 0) {
-        padding = find_pow2_matrix_padding(cross_over, n);
+        padding = find_pow2_matrix_padding(n);
     }
     
     int new_matrix_dim = n + padding;
@@ -150,12 +150,12 @@ void read_file(ifstream &infile, vector< vector<int> > &A, int n) {
 }
 
 int find_pow2_matrix_padding(int n) {
-     return pow(2, int(ceil(log2(n))))
+    return pow(2, int(ceil(log2(n))));
 }
 
 bool helper_done(int cross_over, int n){
     while (n > cross_over){
-        if (n%2 != 0){
+        if (n % 2 != 0){
             return false;
         }
         else {
