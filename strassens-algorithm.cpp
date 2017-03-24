@@ -256,14 +256,7 @@ void strassen(ifstream &file, int cross_over, int n, bool opt) {
         file.close();
         
         strassen_pad(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, new_matrix_dim);
-        
-        //    matrix_mult_reg(A, B, C, 0, 0, 0, 0, 0, 0, n);
-        
-        // print matrix
-        //    matrix_print(C, n);
-        
         // extract diagonal of the matrix
-        cout << "Optimal Padding" << endl;
         matrix_print_diag(C, n);
         cout << endl;
     }
@@ -289,8 +282,7 @@ void strassen(ifstream &file, int cross_over, int n, bool opt) {
         //    matrix_print(C, n);
         
         // extract diagonal of the matrix
-        cout << "Power of 2 Padding" << endl;
-        matrix_print(C, n);
+        matrix_print_diag(C, n);
         cout << endl;
     }
     else{
