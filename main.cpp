@@ -19,12 +19,14 @@ int main(int argc, const char * argv[]) {
     
     int matrix_dim = atoi(argv[2]);
     ifstream infile(argv[3]);
+    
     // optimal pre-determined cross_over point
-    int cross_over = 2;
+    int cross_over = 63;
+    int opt_algo = 1;
+    int read_matrix_bool = 1;
+    int print_matrix_bool = 1;
+    strassen(infile, cross_over, matrix_dim, opt_algo, read_matrix_bool, print_matrix_bool);
 
-//    strassen(infile, cross_over, matrix_dim, 1);
-//  strassen_odd_padding(infile, cross_over, matrix_dim);
-//    test_cross_over_all_matrices(1, 70, 10, 0, 3);
-
+//    test_cross_over_all_matrices(64, 64, 25, 0);
     return 0;
 }
