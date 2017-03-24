@@ -22,9 +22,9 @@ int main(int argc, const char * argv[]) {
     // optimal pre-determined cross_over point
     int cross_over = 3;
 
-//    strassen(infile, cross_over, matrix_dim);
+//    strassen(infile, cross_over, matrix_dim, 1);
 //    strassen_odd_padding(infile, cross_over, matrix_dim);
-    test_cross_over_all_matrices(1, 70, 10, 0, 3);
+//    test_cross_over_all_matrices(1, 70, 10, 0, 3);
 
     return 0;
 }

@@ -111,6 +111,7 @@ void strassen_odd_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector
         matrix_mult_reg(A, B, C, r1, c1, r2, c2, r3, c3, n);
     }
     else {
+        int new_n = n;
         if (n % 2 != 0){
             for(int i = 0; i < n; i++){
                 A.at(i).resize(n+1);
@@ -118,10 +119,16 @@ void strassen_odd_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector
                 C.at(i).resize(n+1);
             }
             A.resize(n+1);
+            A.at(n).resize(n+1);
             B.resize(n+1);
+            B.at(n).resize(n+1);
             C.resize(n+1);
+            C.at(n).resize(n+1);
+            new_n = (n+1)/2;
         }
-        int new_n = n / 2;
+        else {
+            new_n = n/2;
+        }
         vector<int> vector_dim(new_n);
         
         vector< vector<int> > M1(new_n, vector_dim), M2(new_n, vector_dim), M3(new_n, vector_dim), M4(new_n, vector_dim), M5(new_n, vector_dim), M6(new_n, vector_dim), M7(new_n, vector_dim), l_term(new_n, vector_dim), r_term(new_n, vector_dim);
@@ -155,34 +162,34 @@ void strassen_odd_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector
         
         // compute M1 = A11 * (B12 - B22)
         matrix_subtract(B, B, r_term, B12_r, B12_c, B22_r, B22_c, 0, 0, new_n);
-        strassen_pad(A, r_term, M1, A11_r, A11_c, 0, 0, 0, 0, cross_over, new_n);
+        strassen_odd_pad(A, r_term, M1, A11_r, A11_c, 0, 0, 0, 0, cross_over, new_n);
         
         // compute M2 = (A11 + A12) * B22
         matrix_add(A, A, l_term, A11_r, A11_c, A12_r, A12_c, 0, 0, new_n);
-        strassen_pad(l_term, B, M2, 0, 0, B22_r, B22_c, 0, 0, cross_over, new_n);
+        strassen_odd_pad(l_term, B, M2, 0, 0, B22_r, B22_c, 0, 0, cross_over, new_n);
         
         // compute M3 = (A21 + A22) * B11
         matrix_add(A, A, l_term, A21_r, A21_c, A22_r, A22_c, 0, 0, new_n);
-        strassen_pad(l_term, B, M3, 0, 0, B11_r, B11_c, 0, 0, cross_over, new_n);
+        strassen_odd_pad(l_term, B, M3, 0, 0, B11_r, B11_c, 0, 0, cross_over, new_n);
         
         // compute M4 = A22 * (B21 - B11)
         matrix_subtract(B, B, r_term, B21_r, B21_c, B11_r, B11_c, 0, 0, new_n);
-        strassen_pad(A, r_term, M4, A22_r, A22_c, 0, 0, 0, 0, cross_over, new_n);
+        strassen_odd_pad(A, r_term, M4, A22_r, A22_c, 0, 0, 0, 0, cross_over, new_n);
         
         // compute M5 = (A11 + A22) * (B11 + B22)
         matrix_add(A, A, l_term, A11_r, A11_c, A22_r, A22_c, 0, 0, new_n);
         matrix_add(B, B, r_term, B11_r, B11_c, B22_r, B22_c, 0, 0, new_n);
-        strassen_pad(l_term, r_term, M5, 0, 0, 0, 0, 0, 0, cross_over, new_n);
+        strassen_odd_pad(l_term, r_term, M5, 0, 0, 0, 0, 0, 0, cross_over, new_n);
         
         // compute M6 = (A12 - A22) * (B21 + B22)
         matrix_subtract(A, A, l_term, A12_r, A12_c, A22_r, A22_c, 0, 0, new_n);
         matrix_add(B, B, r_term, B21_r, B21_c, B22_r, B22_c, 0, 0, new_n);
-        strassen_pad(l_term, r_term, M6, 0, 0, 0, 0, 0, 0, cross_over, new_n);
+        strassen_odd_pad(l_term, r_term, M6, 0, 0, 0, 0, 0, 0, cross_over, new_n);
         
         // compute M7 = (A11 - A21) * (B11 + B12)
         matrix_subtract(A, A, l_term, A11_r, A11_c, A21_r, A21_c, 0, 0, new_n);
         matrix_add(B, B, r_term, B11_r, B11_c, B12_r, B12_c, 0, 0, new_n);
-        strassen_pad(l_term, r_term, M7, 0, 0, 0, 0, 0, 0, cross_over, new_n);
+        strassen_odd_pad(l_term, r_term, M7, 0, 0, 0, 0, 0, 0, cross_over, new_n);
         
         
         // start and end indexes for matrix C
@@ -228,35 +235,66 @@ void strassen_odd_padding(ifstream &file, int cross_over, int n){
     file.close();
     
     strassen_odd_pad(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, n);
-    matrix_print_diag(C, n);
+    matrix_print(C, n);
     cout << endl;
 }
 
 
-void strassen(ifstream &file, int cross_over, int n) {
-    int padding = find_pow2_matrix_padding(cross_over, n);
+void strassen(ifstream &file, int cross_over, int n, bool opt) {
+    if(opt){
+        int padding = find_opt_matrix_padding(cross_over, n);
+        
+        // initialize new matrix dimensions with determined padding
+        int new_matrix_dim = n + padding;
+        vector<int> vector_dim(new_matrix_dim);
+        
+        // initialize vector of vectors (matrix representation)
+        vector< vector<int> > A(new_matrix_dim, vector_dim), B(new_matrix_dim, vector_dim), C(new_matrix_dim, vector_dim);
+        
+        read_file(file, A, n);
+        read_file(file, B, n);
+        file.close();
+        
+        strassen_pad(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, new_matrix_dim);
+        
+        //    matrix_mult_reg(A, B, C, 0, 0, 0, 0, 0, 0, n);
+        
+        // print matrix
+        //    matrix_print(C, n);
+        
+        // extract diagonal of the matrix
+        matrix_print_diag(C, n);
+        cout << endl;
+    }
+    else if(!opt){
+        int padding = find_pow2_matrix_padding(cross_over, n);
+        
+        // initialize new matrix dimensions with determined padding
+        int new_matrix_dim = n + padding;
+        vector<int> vector_dim(new_matrix_dim);
+        
+        // initialize vector of vectors (matrix representation)
+        vector< vector<int> > A(new_matrix_dim, vector_dim), B(new_matrix_dim, vector_dim), C(new_matrix_dim, vector_dim);
+        
+        read_file(file, A, n);
+        read_file(file, B, n);
+        file.close();
+        
+        strassen_pad(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, new_matrix_dim);
+        
+        //    matrix_mult_reg(A, B, C, 0, 0, 0, 0, 0, 0, n);
+        
+        // print matrix
+        //    matrix_print(C, n);
+        
+        // extract diagonal of the matrix
+        matrix_print(C, n);
+        cout << endl;
+    }
+    else{
+        cout << "Improper Usage" << endl;
+    }
     
-    // initialize new matrix dimensions with determined padding
-    int new_matrix_dim = n + padding;
-    vector<int> vector_dim(new_matrix_dim);
-    
-    // initialize vector of vectors (matrix representation)
-    vector< vector<int> > A(new_matrix_dim, vector_dim), B(new_matrix_dim, vector_dim), C(new_matrix_dim, vector_dim);
-    
-    read_file(file, A, n);
-    read_file(file, B, n);
-    file.close();
-
-    strassen_pad(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, new_matrix_dim);
-    
-//    matrix_mult_reg(A, B, C, 0, 0, 0, 0, 0, 0, n);
-    
-    // print matrix
-//    matrix_print(C, n);
-    
-    // extract diagonal of the matrix
-    matrix_print_diag(C, n);
-    cout << endl;
 }
 
 void read_file(ifstream &infile, vector< vector<int> > &A, int n) {

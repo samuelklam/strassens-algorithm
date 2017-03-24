@@ -51,8 +51,9 @@ void strassen_odd_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector
  * extracts matrix diagonal
  * @param cross_over : matrix dimension to switch to regular matrix multiplication
  * @param n : dimension of the matrices
+ * @param opt : flag to set whether to run optimal padding or power of 2 padding
  */
-void strassen(ifstream &file, int cross_over, int n);
+void strassen(ifstream &file, int cross_over, int n, bool opt);
 
 /*
  * Strassen's matrix multiplication, initializes matrix values,
