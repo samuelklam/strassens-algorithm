@@ -241,7 +241,7 @@ void strassen_odd_padding(ifstream &file, int cross_over, int n){
 
 
 void strassen(ifstream &file, int cross_over, int n, bool opt) {
-    if(opt){
+    if(opt == 1){
         int padding = find_opt_matrix_padding(cross_over, n);
         
         // initialize new matrix dimensions with determined padding
@@ -263,10 +263,11 @@ void strassen(ifstream &file, int cross_over, int n, bool opt) {
         //    matrix_print(C, n);
         
         // extract diagonal of the matrix
+        cout << "Optimal Padding" << endl;
         matrix_print_diag(C, n);
         cout << endl;
     }
-    else if(!opt){
+    else if(opt == 0){
         int padding = find_pow2_matrix_padding(cross_over, n);
         
         // initialize new matrix dimensions with determined padding
@@ -288,6 +289,7 @@ void strassen(ifstream &file, int cross_over, int n, bool opt) {
         //    matrix_print(C, n);
         
         // extract diagonal of the matrix
+        cout << "Power of 2 Padding" << endl;
         matrix_print(C, n);
         cout << endl;
     }
