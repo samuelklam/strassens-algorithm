@@ -50,16 +50,15 @@ void strassen(ifstream &file, int cross_over, int n, int opt, bool matrix_fill, 
 void read_file(ifstream &infile, vector< vector<int> > &A, int n);
 
 /*
- * Algo 1: Finds the number of rows/columns to pad based on the cross_over value
- * @param cross_over : given cross_over value (optimal or not)
+ * Used in Algo 1: Finds the next power of 2 from the cross_over value
  * @param n : pre-padded matrix dimension
  * @return : returns # of rows/columns to pad to to reach next pow 2
  */
-int find_pow2_matrix_padding(int cross_over, int n);
+int find_pow2_matrix_padding(int n);
 
 /*
  * Algo 3: Finds the optimal number of rows/columns to pad based on the cross_over value, such that
- * you can use strassen without having to pad to safely reach a designated cross_over value (<= cross_over)
+ * you can pad strassens only at the beginning to safely reach a designated cross_over value (<= cross_over)
  * @param cross_over : given cross_over value (optimal or not)
  * @param n : pre-padded matrix dimension
  * @return : returns # of rows/cols to pad
@@ -70,6 +69,7 @@ int find_opt_matrix_padding(int cross_over, int n);
  * Finds the optimal number of rows/columns to pad given one cross_over value, used for testing
  * @param cross_over : given cross_over value (optimal or not)
  * @param n : pre-padded matrix dimension
+ * @return : returns # of rows/cols to pad
  */
 int find_opt_matrix_padding_test(int cross_over, int n);
 

@@ -108,19 +108,15 @@ void strassen_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector< ve
 
 void strassen(ifstream &file, int cross_over, int n, int opt, bool matrix_fill, int print_bool) {
     
-    int padding;
+    int padding = 0;
     if (opt == 1) {
         padding = find_opt_matrix_padding(cross_over, n);
     }
     else if (opt == 0) {
         padding = find_pow2_matrix_padding(cross_over, n);
     }
-    else {
-        padding = 0;
-    }
     
     int new_matrix_dim = n + padding;
-    
     vector<int> vector_dim(new_matrix_dim);
     
     // initialize vector of vectors (matrix representation)
@@ -131,24 +127,15 @@ void strassen(ifstream &file, int cross_over, int n, int opt, bool matrix_fill, 
         read_file(file, B, n);
         file.close();
     }
-    else {
-        fill_matrix_rand(A, B, n);
-    }
+    else fill_matrix_rand(A, B, n);
     
     if (opt == 1 || opt == 0) {
         strassen_pad(A, B, C, 0, 0, 0, 0, 0, 0, cross_over, new_matrix_dim);
     }
-    else {
-        matrix_mult_reg(A, B, C, 0, 0, 0, 0, 0, 0, n);
-    }
+    else matrix_mult_reg(A, B, C, 0, 0, 0, 0, 0, 0, n);
     
-    
-    if (print_bool >= 2) {
-        matrix_print(C, n);
-    }
-    if (print_bool >= 1) {
-        matrix_print_diag(C, n);
-    }
+    if (print_bool >= 2) matrix_print(C, n);
+    if (print_bool >= 1) matrix_print_diag(C, n);
     cout << endl;
 }
 
@@ -162,23 +149,8 @@ void read_file(ifstream &infile, vector< vector<int> > &A, int n) {
     }
 }
 
-int find_pow2_matrix_padding(int cross_over, int n) {
-    
-    int k = 0;
-    int r_term;
-    
-    // padding is not necessary, thus return 0
-    if (n <= cross_over) {
-        return 0;
-    }
-    
-    while (1) {
-        r_term = cross_over * pow(2, k);
-        if (n <= r_term) {
-            return r_term - n;
-        }
-        k++;
-    }
+int find_pow2_matrix_padding(int n) {
+     return pow(2, int(ceil(log2(n))))
 }
 
 bool helper_done(int cross_over, int n){
