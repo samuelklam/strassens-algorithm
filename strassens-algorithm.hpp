@@ -80,14 +80,5 @@ int find_opt_matrix_padding(int cross_over, int n);
  */
 void strassen_odd_pad(vector< vector<int> > &A, vector< vector<int> > &B, vector< vector<int> > &C, int r1, int c1, int r2, int c2, int r3, int c3, int cross_over, int n);
 
-/*
- * Algo 2: Strassen's matrix multiplication, initializes matrix values,
- * extracts matrix diagonal
- * @param file : file to read in values for 2 matrices
- * @param cross_over : matrix dimension to switch to regular matrix multiplication
- * @param n : dimension of the matrices
- */
-void strassen_odd_padding(ifstream &file, int cross_over, int n);
-
 #endif /* strassens_algorithm_hpp */
 
