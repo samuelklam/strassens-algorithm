@@ -70,5 +70,3 @@ matrix dimension: 84, time: 5233.16, cross-over: 42, padding: 0, num_trials: 25
 matrix dimension: 85, time: 5646.88, cross-over: 43, padding: 1, num_trials: 25
 matrix dimension: 2048, time: 47490.3, cross-over: 64, padding: 0, num_trials: 1
 matrix dimension: 4096, time: 331742, cross-over: 64, padding: 0, num_trials: 1
-matrix dimension: 4096, time: 334.42, cross-over: 64, padding: 0, num_trials: 1
-
